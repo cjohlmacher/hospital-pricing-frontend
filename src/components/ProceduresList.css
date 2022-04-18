@@ -1,0 +1,40 @@
+.ProceduresList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 15px;
+    min-width: 90%;
+}
+
+input {
+    flex-grow: 2;
+    height: 1.5em;
+}
+
+button {
+    margin: 0px 5px;
+    padding: 5px;
+    background-color: rgb(70, 112, 190);
+    box-shadow: none;
+    color: white;
+    border: none;
+    box-shadow: 1px 1px black;
+    border-radius: 2px;
+}
+
+button:hover {
+    background-color: rgb(56, 100, 182);
+    cursor: pointer;
+}
+
+.ProceduresList > a {
+    color: black;
+}

@@ -1,0 +1,47 @@
+.PriceCard {
+    display: flex;
+    flex-direction: column;
+    border: solid black 1px;
+    border-radius: 5px;
+    box-shadow: 0 0 1px black;
+    margin: 2px;
+    padding: 2px 5px;
+    width: 100%;
+}
+
+.subtitle {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.button-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+img {
+    height: 2.5em;
+    margin: 5px 0px;
+}
+
+.title-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.PriceCard p {
+    font-size: 0.8em;
+    text-align: left;
+    padding: 2px;
+    margin: 2px;
+}
+
+.PriceCard > a {
+    color: black;
+}
+
+.price {
+    color: rgb(27,62,245);
+}

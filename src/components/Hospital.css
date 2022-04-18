@@ -1,0 +1,21 @@
+.HospitalDetail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.procedure-cards {
+    margin: 10px;
+    width: 90%;
+}
+
+.header {
+    display: flex;
+    margin: 5px;
+}
+
+a.external-url {
+    font-size: 1em;
+    color: black;
+}

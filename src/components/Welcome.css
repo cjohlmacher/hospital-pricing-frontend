@@ -1,0 +1,24 @@
+.Welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 15px;
+}
+
+.links-bar {
+    margin: 15px;
+    padding: 15px;
+}
+
+.links-bar > a {
+    color: white;
+    margin: 15px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: blue;
+}
+
+.Welcome > img {
+    height: 50vh;
+}
