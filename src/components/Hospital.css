@@ -12,12 +12,14 @@
 
 .header {
     display: flex;
+    text-align: center;
     margin: 5px;
 }
 
 a.external-url {
     font-size: 1em;
-    color: black;
+    color: rgb(34,136,197);
+    text-decoration: underline;
 }
 
 .detail {

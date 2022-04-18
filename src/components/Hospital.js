@@ -27,7 +27,7 @@ const Hospital = (props) => {
             {hospitalInfo ? <h4>{hospitalInfo.fullName}</h4> : null}
             {hospitalInfo ? <p className="detail">{hospitalInfo.address}</p> : null}
             {hospitalInfo ? <p className="detail">{hospitalInfo.city}, {hospitalInfo.state} {hospitalInfo.zipCode}</p> : null}
-            {hospitalInfo ? <a className="external-url" href={hospitalInfo.url} target="blank">{hospitalInfo.url}</a> : null}
+            {hospitalInfo ? <a className="external-url" href={hospitalInfo.url} target="blank">Visit Hospital Website</a> : null}
         </div>
     );
 
