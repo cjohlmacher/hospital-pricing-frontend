@@ -39,4 +39,5 @@ button:hover {
 
 .HospitalList > a {
     color: black;
+    margin: 0px;
 }

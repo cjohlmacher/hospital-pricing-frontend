@@ -12,7 +12,7 @@ const Welcome = (props) => {
                 <NavLink to="/hospitals">Search by Hospital</NavLink>
                 <NavLink to="/procedures">Search by Procedure</NavLink>
             </div>
-            <img src={require("../pexels-chokniti-khongchum-2280568.jpg")}/>
+            <img src={require("../pexels-chokniti-khongchum-2280568.jpg")} alt="Gloved Hands Holding Sphere"/>
         </div>
     )
 };

@@ -10,7 +10,7 @@ const PriceCard = ({title='', price='', subtitle='', descriptors=[], iconImg=nul
             {iconImg ? <img src={`../${iconImg}`} alt="" /> : null}
             <div className="title-block">
                 <p>{title}</p>
-                <p class="price">{price}</p>
+                <p className="price">{price}</p>
             </div>
             {subtitle ? <p className="subtitle">{subtitle}</p> : null}
            {descriptions}

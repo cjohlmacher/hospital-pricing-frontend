@@ -24,7 +24,7 @@ const HospitalsList = (props) => {
     const hospitalCards = filteredHospitals.map(h => {
         return (
             <NavLink to={`hospitals/${h.handle}`} key={h.handle}>
-                <Card key={h.handle} title={h.fullName} subtitle={null} descriptors={[h.url]} iconImg={h.logo} linkTarget={`hospitals/${h.handle}`}/>
+                <Card key={h.handle} title={h.fullName} subtitle={null} descriptors={[h.address, h.city+', '+h.state+' '+h.zipCode, h.url]} iconImg={h.logo} linkTarget={`hospitals/${h.handle}`}/>
             </NavLink>
         )
     });

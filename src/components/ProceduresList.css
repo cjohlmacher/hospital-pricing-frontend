@@ -37,4 +37,5 @@ button:hover {
 
 .ProceduresList > a {
     color: black;
+    margin: 0px;
 }

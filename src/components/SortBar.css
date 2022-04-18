@@ -1,0 +1,15 @@
+.SortBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.SortBar > p {
+    font-size: 0.8em;
+}
+
+.SortBar > select {
+    height: 1.5em;
+    margin: 0px 5px;
+    border: solid 1px grey;
+}

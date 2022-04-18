@@ -19,3 +19,10 @@ a.external-url {
     font-size: 1em;
     color: black;
 }
+
+.detail {
+    font-size: 1em;
+    font-weight: 400;
+    text-align: center;
+    margin: 5px;
+}
