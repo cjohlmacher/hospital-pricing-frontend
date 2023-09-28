@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import HospitalApi from '../api';
 import './Welcome.css';
 
 const Welcome = (props) => {
+    // Make an arbitrary call to backend so that server spins up
+    const spinUpBackendServer = async () => {
+      await HospitalApi.getHospitals('Kaiser');
+    };
+
+    useEffect(() => {
+      spinUpBackendServer();
+    },[]);
+
     return (
         <div className="Welcome">
             <h2>Welcome to Hospital Pricing!</h2>
