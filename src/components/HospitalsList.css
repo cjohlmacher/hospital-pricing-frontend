@@ -6,6 +6,11 @@
     width: 60%;
 }
 
+.hospital-display {
+    display: flex;
+    flex-direction: row;
+}
+
 form {
     display: flex;
     flex-direction: row;
@@ -38,6 +43,8 @@ button:hover {
 }
 
 .HospitalList > a {
+    display: flex;
+    min-width: 100%;
     color: black;
     margin: 0px;
 }

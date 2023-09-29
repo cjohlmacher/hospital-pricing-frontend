@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './HospitalsList.css';
 import HospitalApi from '../api';
-import Card from './Card';
+import HospitalCard from './HospitalCard';
 
 const HospitalsList = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +24,7 @@ const HospitalsList = (props) => {
     const hospitalCards = filteredHospitals.map(h => {
         return (
             <NavLink to={`hospitals/${h.handle}`} key={h.handle}>
-                <Card key={h.handle} title={h.fullName} subtitle={null} descriptors={[h.address, h.city+', '+h.state+' '+h.zipCode, h.url]} iconImg={h.logo} linkTarget={`hospitals/${h.handle}`}/>
+                <HospitalCard key={h.handle} hospital={h} linkTarget={`hospitals/${h.handle}`}/>
             </NavLink>
         )
     });
@@ -46,7 +46,9 @@ const HospitalsList = (props) => {
                 <input type="text" placeholder="Search for hospital..." name="search-term" value={searchTerm} onChange={handleChange}/>
                 <button>Search</button>
             </form>
-            {hospitalCards}
+            <div className="hospital-display">
+              {hospitalCards}
+            </div>
         </div>
     )
 };

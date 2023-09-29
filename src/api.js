@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
-
+const GEOLOCATION_API_KEY = process.env.REACT_APP_GEOLOCATION_API_KEY || '';
+console.log('env variables: ', process.env);
 
 class HospitalApi {
 
@@ -46,7 +47,6 @@ class HospitalApi {
     };
 
   /** Get list of procedures based on search term */
-
     static async getProcedures(searchTerm) {
         let query = {};
         if (searchTerm) {
@@ -54,7 +54,22 @@ class HospitalApi {
         };
         let res = await this.request(`procedures`,query);
         return res.procedures;
-        }
-    };
+    }
+
+  /** Get geolocation data for a given address */
+    static async getGeolocation({address,city,state}) {
+        let res = await axios({
+            url: `https://api.radar.io/v1/geocode/forward?query=${address.split(' ').join('+')}+${city}+${state}`, 
+            method: 'GET', 
+            params: {
+              address,
+            },
+            headers: {
+                'Authorization': GEOLOCATION_API_KEY,
+            }
+        });
+        return res.data.addresses;
+    }
+};
 
 export default HospitalApi;
