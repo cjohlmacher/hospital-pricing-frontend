@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Hospital.css';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import PriceCard from './PriceCard';
 import SortBar from './SortBar';
 import HospitalApi from '../api';
@@ -8,7 +8,7 @@ import HospitalApi from '../api';
 const Hospital = (props) => {
     const { handle } = useParams();
     const [hospitalInfo, setHospitalInfo] = useState({});
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect( () => {
         const fetchHospital = async (hospitalHandle) => {
@@ -16,7 +16,7 @@ const Hospital = (props) => {
                 const res = await HospitalApi.getHospital(hospitalHandle);
                 setHospitalInfo(res);
             } catch(err) {
-                history.push('/404');
+                navigate('/404');
             }
         };
         fetchHospital(handle);

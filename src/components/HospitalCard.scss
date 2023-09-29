@@ -1,0 +1,47 @@
+.hospital-card {
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid black 1px;
+  padding: 5px 10px;
+  min-width: 100%;
+  &:hover {
+    background-color: #C0DFF870;
+  }
+  h5 {
+    margin-top: 2px;
+    margin-bottom: 6px;
+  }
+  p {
+    font-size: 0.8em;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+  }
+  a {
+    color: black;
+    text-decoration: none;
+  }
+}
+
+.subtitle {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.button-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+img {
+  height: 2.5em;
+  margin: 5px 0px;
+}
+
+.title-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

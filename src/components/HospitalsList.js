@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import './HospitalsList.css';
+import { Link } from 'react-router-dom';
+import './HospitalsList.scss';
 import HospitalApi from '../api';
-import Card from './Card';
+import HospitalCard from './HospitalCard';
+import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 
 const HospitalsList = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredHospitals, setHospitals] = useState([]);
+    const [mapCoordinates, setMapCoordinates] = useState({lat: '51.505', long: '-0.09'})
     const [loading, setLoading] = useState(true);
     
     useEffect(() => {
@@ -23,9 +25,13 @@ const HospitalsList = (props) => {
 
     const hospitalCards = filteredHospitals.map(h => {
         return (
-            <NavLink to={`hospitals/${h.handle}`} key={h.handle}>
-                <Card key={h.handle} title={h.fullName} subtitle={null} descriptors={[h.address, h.city+', '+h.state+' '+h.zipCode, h.url]} iconImg={h.logo} linkTarget={`hospitals/${h.handle}`}/>
-            </NavLink>
+            <Link to={`/hospitals/${h.handle}`} key={h.handle}>
+                <HospitalCard 
+                  key={h.handle} 
+                  hospital={h} 
+                  linkTarget={`hospitals/${h.handle}`}
+                  onLocationChange={() => handleLocationClick(h)}/>
+            </Link>
         )
     });
 
@@ -39,6 +45,25 @@ const HospitalsList = (props) => {
         setLoading(s => true);
     };
 
+    const handleLocationClick = async (hospital) => {
+        try {
+            const {address, city, state} = hospital;
+            const location = await HospitalApi.getGeolocation({address, city, state});
+            if (location.length) {
+              const {latitude: lat, longitude: long} = location[0];
+              setMapCoordinates({lat, long});
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    function ChangeView({ center, zoom }) {
+        const map = useMap();
+        map.setView(center, zoom);
+        return null;
+    }
+
     return (
         <div className="HospitalList">
             <form onSubmit={handleSubmit}>
@@ -46,7 +71,28 @@ const HospitalsList = (props) => {
                 <input type="text" placeholder="Search for hospital..." name="search-term" value={searchTerm} onChange={handleChange}/>
                 <button>Search</button>
             </form>
-            {hospitalCards}
+            <div className="hospitals-main">
+                <div className="hospital-cards">
+                    {hospitalCards}
+                </div>
+                <div className="map-panel">
+                    <div id="map">
+                        <MapContainer 
+                            center={[mapCoordinates.lat, mapCoordinates.long]} 
+                            zoom={12} 
+                            scrollWheelZoom={false}
+                            style={{width: '300px', height: '300px'}}>
+                                <ChangeView center={[mapCoordinates.lat, mapCoordinates.long]} zoom={12} /> 
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <Marker position={[mapCoordinates.lat, mapCoordinates.long]}>
+                                </Marker>
+                        </MapContainer>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 };

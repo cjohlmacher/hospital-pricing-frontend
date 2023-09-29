@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Welcome from './components/Welcome';
 import ProceduresList from './components/ProceduresList';
@@ -11,29 +11,17 @@ import Hospital from './components/Hospital';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <NavBar />
-        <div className="content">
-          <Route exact path="/procedures">
-            <ProceduresList />
-          </Route>
-          <Route path="/procedures/:code">
-            <Procedure />
-          </Route>
-          <Route exact path="/hospitals">
-            <HospitalsList />
-          </Route>
-          <Route path="/hospitals/:handle">
-            <Hospital />
-          </Route>
-          <Route exact path="/">
-            <Welcome />
-          </Route>
-          <Route path = "/404">
-            <p>Error: Page not found</p>
-          </Route>
-        </div>
-      </BrowserRouter>
+      <NavBar />
+      <div className="content">
+        <Routes>
+          <Route exact path="/procedures" element={<ProceduresList />} />
+          <Route path="/procedures/:code" element={<Procedure />} />
+          <Route exact path="/hospitals" element={<HospitalsList />} />
+          <Route path="/hospitals/:handle" element={<Hospital />} />
+          <Route exact path="/" element={<Welcome />} />
+          <Route path = "/404" element={<p>Error: Page not found</p>} />
+        </Routes>
+      </div>
     </div>
   );
 }

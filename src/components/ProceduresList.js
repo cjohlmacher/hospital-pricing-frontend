@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './ProceduresList.css';
 import HospitalApi from '../api';
 import Card from './Card';
@@ -23,9 +23,9 @@ const ProceduresList = (props) => {
 
     const procedureCards = filteredProcedures.map(p => {
         return (
-            <NavLink to={`procedures/${p.cptCode}`} key={p.cptCode}>
+            <Link to={`/procedures/${p.cptCode}`} key={p.cptCode}>
                 <Card key={p.cptCode} title={p.description} subtitle={`CPT code: ${p.cptCode}`} descriptors={[]} linkTarget={`procedures/${p.cptCode}`}/>
-            </NavLink>
+            </Link>
         )
     });
 
