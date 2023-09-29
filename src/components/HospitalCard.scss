@@ -4,6 +4,24 @@
   border-bottom: solid black 1px;
   padding: 5px 10px;
   min-width: 100%;
+  &:hover {
+    background-color: #C0DFF870;
+  }
+  h5 {
+    margin-top: 2px;
+    margin-bottom: 6px;
+  }
+  p {
+    font-size: 0.8em;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+  }
+  a {
+    color: black;
+    text-decoration: none;
+  }
 }
 
 .subtitle {
@@ -26,20 +44,4 @@ img {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-
-.hospital-card h5 {
-  margin-top: 2px;
-  margin-bottom: 6px;
-}
-
-.hospital-card p {
-  font-size: 0.8em;
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
-}
-
-.hospital-card > a {
-  color: black;
 }

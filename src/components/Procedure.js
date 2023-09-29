@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Procedure.scss';
 import PriceCard from './PriceCard';
 import SortBar from './SortBar';
@@ -10,7 +10,7 @@ const Procedure = (props) => {
     const { code } = useParams();
     const [procedureInfo, setProcedureInfo] = useState({});
     const [mapCoordinates, setMapCoordinates] = useState({lat: '51.505', long: '-0.09'})
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect( () => {
         const fetchProcedure = async (procedureCode) => {
@@ -18,7 +18,7 @@ const Procedure = (props) => {
                 const res = await HospitalApi.getProcedure(procedureCode);
                 setProcedureInfo(res);
             } catch(err) {
-                history.push('/404');
+                navigate('/404');
             }
         };
         fetchProcedure(code);
