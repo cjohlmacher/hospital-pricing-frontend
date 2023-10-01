@@ -1,21 +1,20 @@
 import React from 'react';
-import './PriceCard.css';
+import {FaMapLocationDot} from "react-icons/fa6"
+import './PriceCard.scss';
 
-const PriceCard = ({title='', price='', subtitle='', descriptors=[], iconImg=null, button=null }) => {
-    const descriptions = descriptors.map(description => {
-        return <p key="descriptor" className="descriptor">{description}</p>
-    });
+const PriceCard = ({title='', price='', iconImg=null, onLocationChange }) => {
+
+    const findButton_clickHandler = (e) => {
+        e.preventDefault();
+        onLocationChange();
+      }
+
     return (
         <div className="PriceCard">
-            {iconImg ? <img src={`../${iconImg}`} alt="" /> : null}
             <div className="title-block">
-                <p>{title}</p>
-                <p className="price">{price}</p>
-            </div>
-            {subtitle ? <p className="subtitle">{subtitle}</p> : null}
-           {descriptions}
-            <div className="button-bar">
-                {button ? <button onClick={button.handleClick}>{button.text}</button> : null}
+                <h5>{title} <FaMapLocationDot onClick={findButton_clickHandler} style={{cursor: 'pointer'}}/></h5>
+                {iconImg ? <img src={`../${iconImg}`} alt="" /> : null}
+                <p className="descriptor">{price}</p>
             </div>
         </div>
     )

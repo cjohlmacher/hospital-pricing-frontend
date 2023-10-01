@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 import Welcome from './components/Welcome';
 import ProceduresList from './components/ProceduresList';
 import HospitalsList from './components/HospitalsList';
@@ -22,6 +23,7 @@ function App() {
           <Route path = "/404" element={<p>Error: Page not found</p>} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }
