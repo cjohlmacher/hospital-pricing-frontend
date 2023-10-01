@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Procedure.scss';
 import PriceCard from './PriceCard';
+import Spinner from './Spinner';
 import SortBar from './SortBar';
 import HospitalApi from '../api';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
@@ -9,20 +10,30 @@ import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 const Procedure = (props) => {
     const { code } = useParams();
     const [procedureInfo, setProcedureInfo] = useState({});
-    const [mapCoordinates, setMapCoordinates] = useState({lat: '51.505', long: '-0.09'})
+    const [mapCoordinates, setMapCoordinates] = useState({lat: '51.505', long: '-0.09'});
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
+    const fetchProcedure = async (procedureCode) => {
+        setLoading(s => true);
+        try {
+            const res = await HospitalApi.getProcedure(procedureCode);
+            setProcedureInfo(res);
+        } catch(err) {
+            navigate('/404');
+        }
+        setLoading(s => false);
+    };
+
     useEffect( () => {
-        const fetchProcedure = async (procedureCode) => {
-            try {
-                const res = await HospitalApi.getProcedure(procedureCode);
-                setProcedureInfo(res);
-            } catch(err) {
-                navigate('/404');
-            }
-        };
         fetchProcedure(code);
     },[]);
+
+    useEffect(() => {
+        if (procedureInfo.hospitalCosts && procedureInfo.hospitalCosts.length) {
+            loadLocation(procedureInfo.hospitalCosts[0].hospitalHandle);
+        }
+    },[procedureInfo.hospitalCosts])
 
     const procedureHeader = (
         <div>
@@ -30,7 +41,7 @@ const Procedure = (props) => {
         </div>
     );
 
-    const handleLocationClick = async (hospitalHandle) => {
+    const loadLocation = async (hospitalHandle) => {
         try {
             const {address, city, state} = await HospitalApi.getHospital(hospitalHandle);
             const location = await HospitalApi.getGeolocation({address, city, state});
@@ -55,8 +66,7 @@ const Procedure = (props) => {
             return <PriceCard key={c.hospitalHandle} 
                         title={c.hospitalName} 
                         price={`$${c.cost}`}
-                        descriptors={[]}
-                        button={{handleClick: () => handleLocationClick(c.hospitalHandle), text: 'Find'}}
+                        onLocationChange={() => loadLocation(c.hospitalHandle)}
                     />
         });
     };
@@ -84,7 +94,7 @@ const Procedure = (props) => {
         });
     };
 
-    return (
+    return loading ? <Spinner /> : (
         <div className="ProcedureDetail">
             <div className="header">
                 {procedureHeader}

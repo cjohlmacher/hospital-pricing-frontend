@@ -22,7 +22,13 @@
     margin: 15px;
     padding: 10px;
     border-radius: 15px;
-    background-color: blue;
+    background-color: #4e94f4;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    &:hover {
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+        background-color: #3a87f1;
+    }
 }
 
 .Welcome > img {

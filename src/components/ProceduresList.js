@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './ProceduresList.css';
+import Spinner from './Spinner';
+import './ProceduresList.scss';
 import HospitalApi from '../api';
-import Card from './Card';
 
 const ProceduresList = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredProcedures, setProcedures] = useState([]);
     const [loading, setLoading] = useState(true);
     
+    const fetchProcedures = async () => {
+        setLoading(s => true);
+        const procedures = await HospitalApi.getProcedures(searchTerm);
+        setProcedures(p => procedures);
+        setLoading(s => false);
+    };
+
     useEffect(() => {
-        if (!loading) {
-            return
-        };
-        const fetchProcedures = async () => {
-            const procedures = await HospitalApi.getProcedures(searchTerm);
-            setProcedures(p => procedures);
-            setLoading(s => false);
-        };
         fetchProcedures();
-    },[loading]);
+    },[]);
 
     const procedureCards = filteredProcedures.map(p => {
         return (
             <Link to={`/procedures/${p.cptCode}`} key={p.cptCode}>
-                <Card key={p.cptCode} title={p.description} subtitle={`CPT code: ${p.cptCode}`} descriptors={[]} linkTarget={`procedures/${p.cptCode}`}/>
+                <div className="procedure-card">
+                    <h5>{p.description}</h5>
+                </div>
             </Link>
         )
     });
@@ -37,9 +38,10 @@ const ProceduresList = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(s => true);
+        fetchProcedures();
     };
 
-    return (
+    return loading ? <Spinner /> : (
         <div className="ProceduresList">
             <form onSubmit={handleSubmit}>
                 <label name="search-term"></label>

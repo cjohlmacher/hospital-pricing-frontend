@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './HospitalsList.scss';
 import HospitalApi from '../api';
 import HospitalCard from './HospitalCard';
+import Spinner from './Spinner';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 
 const HospitalsList = (props) => {
@@ -10,18 +11,23 @@ const HospitalsList = (props) => {
     const [filteredHospitals, setHospitals] = useState([]);
     const [mapCoordinates, setMapCoordinates] = useState({lat: '51.505', long: '-0.09'})
     const [loading, setLoading] = useState(true);
+
+    const fetchHospitals = async () => {
+        setLoading(s => true);
+        const hospitals = await HospitalApi.getHospitals(searchTerm);
+        setHospitals(h => hospitals);
+        setLoading(s => false);
+    }
     
     useEffect(() => {
-        if (!loading) {
-            return
-        };
-        const fetchHospitals = async () => {
-            const hospitals = await HospitalApi.getHospitals(searchTerm);
-            setHospitals(h => hospitals);
-            setLoading(s => false);
-        };
         fetchHospitals();
-    },[loading]);
+    },[]);
+
+    useEffect(() => {
+        if (filteredHospitals.length) {
+            loadLocation(filteredHospitals[0]);
+        }
+    },[filteredHospitals])
 
     const hospitalCards = filteredHospitals.map(h => {
         return (
@@ -30,7 +36,7 @@ const HospitalsList = (props) => {
                   key={h.handle} 
                   hospital={h} 
                   linkTarget={`hospitals/${h.handle}`}
-                  onLocationChange={() => handleLocationClick(h)}/>
+                  onLocationChange={() => loadLocation(h)}/>
             </Link>
         )
     });
@@ -42,10 +48,10 @@ const HospitalsList = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setLoading(s => true);
+        fetchHospitals();
     };
 
-    const handleLocationClick = async (hospital) => {
+    const loadLocation = async (hospital) => {
         try {
             const {address, city, state} = hospital;
             const location = await HospitalApi.getGeolocation({address, city, state});
@@ -65,7 +71,7 @@ const HospitalsList = (props) => {
     }
 
     return (
-        <div className="HospitalList">
+        loading ? <Spinner /> : <div className="HospitalList">
             <form onSubmit={handleSubmit}>
                 <label name="search-term"></label>
                 <input type="text" placeholder="Search for hospital..." name="search-term" value={searchTerm} onChange={handleChange}/>

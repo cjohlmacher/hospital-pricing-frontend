@@ -2,7 +2,6 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 const GEOLOCATION_API_KEY = process.env.REACT_APP_GEOLOCATION_API_KEY || '';
-console.log('env variables: ', process.env);
 
 class HospitalApi {
 
@@ -15,13 +14,18 @@ class HospitalApi {
             : {};
 
         try {
-            return (await axios({ url, method, data, params })).data;
+            const response = await axios({ url, method, data, params })
+            if (response) {
+                return response.data;
+            } else {
+                throw new Error(`No response for call to: ${url}`);
+            }
         } catch (err) {
             console.error("API Error:", err.response);
-            let message = err.response.data.error.message;
+            let message = err.response?.data?.error?.message;
             throw Array.isArray(message) ? message : [message];
         }
-        }
+    }
 
   /** Get details on a hospital by handle. */
     static async getHospital(handle) {
@@ -68,7 +72,7 @@ class HospitalApi {
                 'Authorization': GEOLOCATION_API_KEY,
             }
         });
-        return res.data.addresses;
+        return res?.data.addresses;
     }
 };
 
